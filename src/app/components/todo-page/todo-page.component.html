@@ -1,0 +1,32 @@
+<header>
+    <mat-toolbar color="primary">
+        <span>Todo List application (apopov 181-322)</span>
+        <span class="example-spacer"></span>
+    </mat-toolbar>
+</header>
+<main>
+    <div class="params content">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Поиск</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="searchInput" (input)="search()">
+        </mat-form-field>
+        <!-- <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+            <mat-icon>filter_list</mat-icon>
+        </button> -->
+        <button mat-mini-fab color="accent" aria-label="Example icon button with a menu icon">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <section class="content">
+        <mat-card *ngFor="let todo of todos" class="todo-card" [ngClass]="todo.is_active ? 'todo-card_active' : 'todo-card_done'">
+            <mat-card-title>{{todo.title}}</mat-card-title>
+            <mat-card-content>{{todo.text}}</mat-card-content>
+            <mat-card-actions>
+                <button mat-stroked-button color="accent" (click)="doTodo(todo.id)" [disabled]="!todo.is_active">Выполнить</button>
+                <button mat-stroked-button color="primary" [disabled]="!todo.is_active">Редактировать</button>
+                <button mat-stroked-button color="warn" (click)="removeTodo(todo.id)" [disabled]="!todo.is_active">Удалить</button>
+            </mat-card-actions>
+            <mat-card-footer>{{todo.created_at | date : ' hh:mm dd/MM/YY'}}</mat-card-footer>
+        </mat-card>
+    </section>
+</main>

@@ -1,0 +1,36 @@
+header {
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .example-spacer {
+        flex: 1 1 auto;
+    }
+}
+main {
+    .params {
+        display: flex;
+        mat-form-field {
+            flex: 1;
+        }
+        button {
+            margin-left: 20px;
+        }
+    }
+    padding: 50px 0;
+    .todo-card {
+        margin-bottom: 20px;
+        mat-card-footer {
+            padding: 0 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        &_active {
+            background-color: white;
+        }
+        &_done {
+            background-color: rgb(233, 233, 233);
+            color: rgb(192, 192, 192);
+        }
+    }
+}
