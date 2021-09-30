@@ -10,6 +10,8 @@ import { ApiService } from 'src/app/services/api.service';
 export class TodoPageComponent implements OnInit {
 
   searchInput = ''
+  isItemPopup = false
+  itemToEdit: null | ToDo = null
   selectedFilterIds: string[] = []
   tags: Tag[] = []
   todos: ToDo[] = [
@@ -57,12 +59,27 @@ export class TodoPageComponent implements OnInit {
 
   addTodo(todo: any) {
     this.api.addTodo(todo)
-      .subscribe((newTodo: ToDo) => this.todos.push(todo))
+      .subscribe((newTodo: ToDo) => this.todos.push(newTodo))
+    this.isItemPopup = false
+  }
+
+  editTodo(todo: ToDo) {
+    this.api.editTodo(todo)
+      .subscribe((newTodo: ToDo) => {
+        const editIndex = this.todos.findIndex(foundTodo => foundTodo.id == todo.id)
+        this.todos[editIndex] = todo
+      })
+    this.isItemPopup = false
   }
 
   filter() {
     this.api.getTodos(this.selectedFilterIds)
       .subscribe((todos: ToDo[]) => this.todos = todos)
+  }
+
+  openEditPopup(todo: ToDo) {
+    this.itemToEdit = todo
+    this.isItemPopup = true
   }
 
 }

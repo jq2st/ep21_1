@@ -13,7 +13,7 @@
         <!-- <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
             <mat-icon>filter_list</mat-icon>
         </button> -->
-        <button mat-mini-fab color="accent" aria-label="Example icon button with a menu icon">
+        <button mat-mini-fab color="accent" aria-label="Example icon button with a menu icon" (click)="isItemPopup = true">
             <mat-icon>add</mat-icon>
         </button>
     </div>
@@ -23,10 +23,12 @@
             <mat-card-content>{{todo.text}}</mat-card-content>
             <mat-card-actions>
                 <button mat-stroked-button color="accent" (click)="doTodo(todo.id)" [disabled]="!todo.is_active">Выполнить</button>
-                <button mat-stroked-button color="primary" [disabled]="!todo.is_active">Редактировать</button>
+                <button mat-stroked-button color="primary" [disabled]="!todo.is_active" (click)="openEditPopup(todo)">Редактировать</button>
                 <button mat-stroked-button color="warn" (click)="removeTodo(todo.id)" [disabled]="!todo.is_active">Удалить</button>
             </mat-card-actions>
             <mat-card-footer>{{todo.created_at | date : ' hh:mm dd/MM/YY'}}</mat-card-footer>
         </mat-card>
     </section>
 </main>
+
+<app-todo-item-popup *ngIf="isItemPopup" [tags]="tags" [itemToEdit]="itemToEdit" (onAdd)="addTodo($event)" (onEdit)="editTodo($event)"></app-todo-item-popup>
