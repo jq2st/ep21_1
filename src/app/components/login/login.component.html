@@ -1,14 +1,14 @@
 <div class="form">
-    <form (submit)="login()">
+    <form [formGroup]="form" (submit)="login()">
         <h2>Вход</h2>
         <mat-form-field appearance="outline">
             <mat-label>Логин</mat-label>
-            <input matInput placeholder="Логин" autocomplete="off">
+            <input matInput placeholder="Логин" autocomplete="off" formControlName="login">
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Пароль</mat-label>
-            <input type="password" matInput placeholder="Пароль"  autocomplete="off">
+            <input type="password" matInput placeholder="Пароль"  autocomplete="off" formControlName="password">
         </mat-form-field>
-        <button mat-flat-button color="primary">Войти</button>
+        <button type="submit" mat-flat-button color="primary">Войти</button>
     </form>
 </div>
