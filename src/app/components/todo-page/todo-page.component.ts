@@ -15,22 +15,22 @@ export class TodoPageComponent implements OnInit {
   selectedFilterIds: string[] = []
   tags: Tag[] = []
   todos: ToDo[] = [
-    { 
-      id: 1,
-      title: 'string',
-      text: 'string',
-      created_at: new Date(),
-      is_active: true,
-      tags: []
-    },
-    { 
-      id: 2,
-      title: 'string',
-      text: 'string',
-      created_at: new Date(),
-      is_active: false,
-      tags: []
-    },
+    // { 
+    //   id: 1,
+    //   title: 'string',
+    //   text: 'string',
+    //   created_at: new Date(),
+    //   is_active: true,
+    //   tags: []
+    // },
+    // { 
+    //   id: 2,
+    //   title: 'string',
+    //   text: 'string',
+    //   created_at: new Date(),
+    //   is_active: false,
+    //   tags: []
+    // },
   ]
 
   constructor(private api: ApiService) { }

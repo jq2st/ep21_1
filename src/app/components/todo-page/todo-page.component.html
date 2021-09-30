@@ -18,16 +18,21 @@
         </button>
     </div>
     <section class="content">
-        <mat-card *ngFor="let todo of todos" class="todo-card" [ngClass]="todo.is_active ? 'todo-card_active' : 'todo-card_done'">
-            <mat-card-title>{{todo.title}}</mat-card-title>
-            <mat-card-content>{{todo.text}}</mat-card-content>
-            <mat-card-actions>
-                <button mat-stroked-button color="accent" (click)="doTodo(todo.id)" [disabled]="!todo.is_active">Выполнить</button>
-                <button mat-stroked-button color="primary" [disabled]="!todo.is_active" (click)="openEditPopup(todo)">Редактировать</button>
-                <button mat-stroked-button color="warn" (click)="removeTodo(todo.id)" [disabled]="!todo.is_active">Удалить</button>
-            </mat-card-actions>
-            <mat-card-footer>{{todo.created_at | date : ' hh:mm dd/MM/YY'}}</mat-card-footer>
-        </mat-card>
+        <ng-container *ngIf="todos.length > 0; else noTodosRef">
+            <mat-card *ngFor="let todo of todos" class="todo-card" [ngClass]="todo.is_active ? 'todo-card_active' : 'todo-card_done'">
+                <mat-card-title>{{todo.title}}</mat-card-title>
+                <mat-card-content>{{todo.text}}</mat-card-content>
+                <mat-card-actions>
+                    <button mat-stroked-button color="accent" (click)="doTodo(todo.id)" [disabled]="!todo.is_active">Выполнить</button>
+                    <button mat-stroked-button color="primary" [disabled]="!todo.is_active" (click)="openEditPopup(todo)">Редактировать</button>
+                    <button mat-stroked-button color="warn" (click)="removeTodo(todo.id)">Удалить</button>
+                </mat-card-actions>
+                <mat-card-footer>{{todo.created_at | date : ' hh:mm dd/MM/YY'}}</mat-card-footer>
+            </mat-card>
+        </ng-container>
+        <ng-template #noTodosRef>
+            <p>Список задач пуст.</p>
+        </ng-template>
     </section>
 </main>
 
