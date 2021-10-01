@@ -17,9 +17,17 @@
             <mat-icon>add</mat-icon>
         </button>
     </div>
-    <section class="content">
+    <div class="tags content">
+        <mat-chip-list aria-label="Fish selection" multiple>
+            <mat-chip color="primary" *ngFor="let tag of tags" [selected]="selectedFilterIds.includes(tag.id)" (click)="editFilters(tag.id)">{{tag.title}}</mat-chip>
+        </mat-chip-list>
+    </div>
+    <section class="todo-list content">
         <ng-container *ngIf="todos.length > 0; else noTodosRef">
             <mat-card *ngFor="let todo of todos" class="todo-card" [ngClass]="todo.is_active ? 'todo-card_active' : 'todo-card_done'">
+                <mat-chip-list aria-label="Fish selection" multiple [disabled]="!todo.is_active">
+                    <mat-chip color="primary" *ngFor="let tag of todo.tags" selected>{{tag.title}}</mat-chip>
+                </mat-chip-list>
                 <mat-card-title>{{todo.title}}</mat-card-title>
                 <mat-card-content>{{todo.text}}</mat-card-content>
                 <mat-card-actions>
@@ -27,7 +35,7 @@
                     <button mat-stroked-button color="primary" [disabled]="!todo.is_active" (click)="openEditPopup(todo)">Редактировать</button>
                     <button mat-stroked-button color="warn" (click)="removeTodo(todo.id)">Удалить</button>
                 </mat-card-actions>
-                <mat-card-footer>{{todo.created_at | date : ' hh:mm dd/MM/YY'}}</mat-card-footer>
+                <mat-card-footer>{{todo.created_at | date : 'short'}}</mat-card-footer>
             </mat-card>
         </ng-container>
         <ng-template #noTodosRef>

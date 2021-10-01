@@ -11,7 +11,9 @@
         </mat-form-field>
         <mat-checkbox 
             *ngFor="let tag of tags"
-            class="example-margin">
+            class="example-margin"
+            (change)="changeFilter()"
+            [checked]="checkSelectedTag(tag)">
             {{tag.title}}
         </mat-checkbox>
         <button type="submit" mat-flat-button color="primary">Сохранить</button>

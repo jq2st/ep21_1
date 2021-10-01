@@ -12,26 +12,9 @@ export class TodoPageComponent implements OnInit {
   searchInput = ''
   isItemPopup = false
   itemToEdit: null | ToDo = null
-  selectedFilterIds: string[] = []
+  selectedFilterIds: number[] = []
   tags: Tag[] = []
-  todos: ToDo[] = [
-    // { 
-    //   id: 1,
-    //   title: 'string',
-    //   text: 'string',
-    //   created_at: new Date(),
-    //   is_active: true,
-    //   tags: []
-    // },
-    // { 
-    //   id: 2,
-    //   title: 'string',
-    //   text: 'string',
-    //   created_at: new Date(),
-    //   is_active: false,
-    //   tags: []
-    // },
-  ]
+  todos: ToDo[] = []
 
   constructor(private api: ApiService) { }
 
@@ -39,17 +22,33 @@ export class TodoPageComponent implements OnInit {
     this.api.getTodos()
       .subscribe((todos: ToDo[]) => this.todos = todos)
     this.api.getTags()
-      .subscribe(tags => this.tags = tags)
+      .subscribe(tags => {
+        this.tags = tags
+      })
+  }
+
+  editFilters(tagId: number) {
+    if (this.selectedFilterIds.includes(tagId)) {
+      this.selectedFilterIds = this.selectedFilterIds.filter(filterTagId => filterTagId != tagId)
+    }
+    else {
+      this.selectedFilterIds.push(tagId)
+    }
+    this.filter()
   }
 
   removeTodo(todoId: string | number) {
     this.api.removeTodo(todoId)
-      .subscribe(() => this.todos.filter(todo => todo.id != todoId))
+      .subscribe(() =>  this.todos = this.todos.filter(todo => todo.id != todoId))
   }
 
-  doTodo(todoId: string | number) {
+  doTodo(todoId: number) {
     this.api.setDoneStatus(todoId)
-      .subscribe(() => this.todos.filter(todo => todo.id != todoId))
+      .subscribe(() => {
+        const idx = this.todos.findIndex(todo => todo.id == todoId)
+        console.error(idx)
+        if (idx != -1) this.todos[idx].is_active = false
+      })
   }
 
   search() {
@@ -59,7 +58,7 @@ export class TodoPageComponent implements OnInit {
 
   addTodo(todo: any) {
     this.api.addTodo(todo)
-      .subscribe((newTodo: ToDo) => this.todos.push(newTodo))
+      .subscribe((newTodo: ToDo) => this.todos.unshift(newTodo))
     this.isItemPopup = false
   }
 
@@ -68,6 +67,7 @@ export class TodoPageComponent implements OnInit {
       .subscribe((newTodo: ToDo) => {
         const editIndex = this.todos.findIndex(foundTodo => foundTodo.id == todo.id)
         this.todos[editIndex] = todo
+        this.itemToEdit = null
       })
     this.isItemPopup = false
   }

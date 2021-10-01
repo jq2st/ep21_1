@@ -17,14 +17,14 @@ export class ApiService {
   }
 
   setDoneStatus(todoId: string | number): Observable<Tag> {
-    return this.http.post<Tag>(`${this._serverUrl}/api/tag/${todoId}/deactive`, {})
+    return this.http.post<Tag>(`${this._serverUrl}/api/task/${todoId}/deactive`, {})
   }
 
   getTags(): Observable<Tag[]> {
     return this.http.get<Tag[]>(`${this._serverUrl}/api/tags`)
   }
 
-  getTodos(filter?: string[]): Observable<ToDo[]> {
+  getTodos(filter?: number[]): Observable<ToDo[]> {
     if (!filter) return this.http.get<ToDo[]>(`${this._serverUrl}/api/tasks`)
     return this.http.get<ToDo[]>(`${this._serverUrl}/api/tasks?filter=${filter.join('_')}`)
   }

@@ -29,6 +29,14 @@ export class TodoItemPopupComponent implements OnInit {
     })
   }
 
+  changeFilter() {
+
+  }
+
+  checkSelectedTag(tag: Tag) : boolean {
+    return this.itemToEdit ? this.itemToEdit.tags.map(tag => tag.id).includes(tag.id) : false
+  }
+
   save() {
     console.error(this.itemToEdit)
     if (this.itemToEdit) {

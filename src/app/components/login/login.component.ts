@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.api.login(this.form.value)
-      .subscribe(() => {
+      .subscribe((res: any) => {
+        localStorage.setItem('todo_token', res.access_token)
         this.router.navigate([''])
       })
   }

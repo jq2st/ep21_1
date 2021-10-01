@@ -10,7 +10,7 @@ import { TodoItemPopupComponent } from './components/todo-item-popup/todo-item-p
 import { LoginComponent } from './components/login/login.component';
 import { TodoPageComponent } from './components/todo-page/todo-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -19,6 +19,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatChipsModule} from '@angular/material/chips';
+import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatInputModule,
     MatCardModule,
     MatCheckboxModule,
+    MatChipsModule,
 
     BrowserModule,
     AppRoutingModule,
@@ -44,7 +47,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
