@@ -1,14 +1,32 @@
 <div class="form">
-    <form [formGroup]="form" (submit)="login()">
-        <h2>Вход</h2>
-        <mat-form-field appearance="outline">
-            <mat-label>Логин</mat-label>
-            <input matInput placeholder="Логин" autocomplete="off" formControlName="login">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Пароль</mat-label>
-            <input type="password" matInput placeholder="Пароль"  autocomplete="off" formControlName="password">
-        </mat-form-field>
-        <button type="submit" mat-flat-button color="primary">Войти</button>
-    </form>
+    <mat-tab-group #tabGroupRef>
+        <mat-tab label="Вход">
+            <form [formGroup]="form" (submit)="login()" autocomplete="off">
+                <h2>Вход</h2>
+                <mat-form-field appearance="outline">
+                    <mat-label>Логин</mat-label>
+                    <input matInput placeholder="Логин" utocomplete="h87h58greg7h8hd" formControlName="login">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Пароль</mat-label>
+                    <input type="password" matInput placeholder="Пароль" autocomplete="h87h58regg7h8hd" formControlName="password">
+                </mat-form-field>
+                <button type="submit" mat-flat-button color="primary">Войти</button>
+            </form>
+        </mat-tab>
+        <mat-tab label="Регистрация">
+            <form [formGroup]="form" (submit)="registration(formDirective)" autocomplete="off" #formDirective="ngForm">
+                <h2>Регистрация</h2>
+                <mat-form-field appearance="outline">
+                    <mat-label>Логин</mat-label>
+                    <input matInput placeholder="Логин" autocomplete="h87hg58g7h8hd" name="fgdfg" formControlName="login">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Пароль</mat-label>
+                    <input type="password" matInput placeholder="Пароль" autocomplete="h87h5ger8g7h8hd" name="hhtrghr" formControlName="password">
+                </mat-form-field>
+                <button type="submit" mat-flat-button color="primary" [disabled]="form.invalid">Зарегистрироваться</button>
+            </form>
+        </mat-tab>
+      </mat-tab-group>
 </div>

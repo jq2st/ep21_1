@@ -20,6 +20,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({
@@ -39,6 +41,8 @@ import { TokenInterceptor } from './token.interceptor';
     MatCardModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatTabsModule,
+    MatSnackBarModule,
 
     BrowserModule,
     AppRoutingModule,

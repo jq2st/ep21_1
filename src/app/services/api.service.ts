@@ -16,6 +16,10 @@ export class ApiService {
     return this.http.post(`${this._serverUrl}/api/sign_in`, user)
   }
 
+  registration(user: User) {
+    return this.http.post(`${this._serverUrl}/api/sign_up`, user)
+  }
+
   setDoneStatus(todoId: string | number): Observable<Tag> {
     return this.http.post<Tag>(`${this._serverUrl}/api/task/${todoId}/deactive`, {})
   }
