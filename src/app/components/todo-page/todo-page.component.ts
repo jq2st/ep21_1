@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Tag, ToDo } from 'src/app/models/interfaces';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,7 +20,8 @@ export class TodoPageComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private auth: AuthService
+    private auth: AuthService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class TodoPageComponent implements OnInit {
   }
 
   showPermissionDeny() {
-    alert('Обычный пользователь не может добавлять более 5 задач.')
+    this._snackBar.open('Добавление более 5 задач не доступно для вашей роли.', 'OK');
   }
 
   editTodo(todo: {id: number, title: string, text: string, tags: number[]}) {
