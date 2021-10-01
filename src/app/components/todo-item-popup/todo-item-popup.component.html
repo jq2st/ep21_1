@@ -16,6 +16,6 @@
             [checked]="checkSelectedTag(tag)">
             {{tag.title}}
         </mat-checkbox>
-        <button type="submit" mat-flat-button color="primary">Сохранить</button>
+        <button type="submit" mat-flat-button color="primary" [disabled]="form.invalid">Сохранить</button>
     </form>
 </div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Tag, ToDo } from 'src/app/models/interfaces';
 import { ApiService } from 'src/app/services/api.service';
@@ -24,8 +24,8 @@ export class TodoItemPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      title: new FormControl(this.itemToEdit ? this.itemToEdit.title : ''),
-      text: new FormControl(this.itemToEdit ? this.itemToEdit.text : '')
+      title: new FormControl(this.itemToEdit ? this.itemToEdit.title : '', Validators.required),
+      text: new FormControl(this.itemToEdit ? this.itemToEdit.text : '', Validators.required)
     })
   }
 
