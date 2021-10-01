@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tag, ToDo } from 'src/app/models/interfaces';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-todo-page',
@@ -16,7 +17,10 @@ export class TodoPageComponent implements OnInit {
   tags: Tag[] = []
   todos: ToDo[] = []
 
-  constructor(private api: ApiService) { }
+  constructor(
+    private api: ApiService,
+    private auth: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.api.getTodos()
@@ -58,15 +62,22 @@ export class TodoPageComponent implements OnInit {
 
   addTodo(todo: any) {
     this.api.addTodo(todo)
-      .subscribe((newTodo: ToDo) => this.todos.unshift(newTodo))
+      .subscribe(
+        (newTodo: ToDo) => this.todos.unshift(newTodo),
+        (error: any) => this.showPermissionDeny()
+      )
     this.isItemPopup = false
   }
 
-  editTodo(todo: ToDo) {
+  showPermissionDeny() {
+    alert('Обычный пользователь не может добавлять более 5 задач.')
+  }
+
+  editTodo(todo: {id: number, title: string, text: string, tags: number[]}) {
     this.api.editTodo(todo)
       .subscribe((newTodo: ToDo) => {
         const editIndex = this.todos.findIndex(foundTodo => foundTodo.id == todo.id)
-        this.todos[editIndex] = todo
+        this.todos[editIndex] = newTodo
         this.itemToEdit = null
       })
     this.isItemPopup = false
@@ -80,6 +91,10 @@ export class TodoPageComponent implements OnInit {
   openEditPopup(todo: ToDo) {
     this.itemToEdit = todo
     this.isItemPopup = true
+  }
+
+  logout() {
+    this.auth.logout()
   }
 
 }

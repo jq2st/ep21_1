@@ -33,7 +33,7 @@ export class ApiService {
     return this.http.post<ToDo>(`${this._serverUrl}/api/tasks`, newTodo)
   }
 
-  editTodo(todo: ToDo): Observable<ToDo> {
+  editTodo(todo: {id: number, title: string, text: string, tags: number[]}): Observable<ToDo> {
     return this.http.put<ToDo>(`${this._serverUrl}/api/task/${todo.id}`, todo)
   }
 

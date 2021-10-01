@@ -12,7 +12,7 @@
         <mat-checkbox 
             *ngFor="let tag of tags"
             class="example-margin"
-            (change)="changeFilter()"
+            (change)="changeFilter($event, tag)"
             [checked]="checkSelectedTag(tag)">
             {{tag.title}}
         </mat-checkbox>

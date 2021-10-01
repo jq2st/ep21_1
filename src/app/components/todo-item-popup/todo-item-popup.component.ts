@@ -12,11 +12,11 @@ import { ApiService } from 'src/app/services/api.service';
 export class TodoItemPopupComponent implements OnInit {
 
   form!: FormGroup
-  selectedTags = []
+  selectedTags: Tag[] = []
   @Input('tags') tags!: Tag[]
   @Input('itemToEdit') itemToEdit: ToDo | null = null
-  @Output() onAdd: EventEmitter<{title: string, text: string, tags: Tag[]}> = new EventEmitter()
-  @Output() onEdit: EventEmitter<ToDo> = new EventEmitter()
+  @Output() onAdd: EventEmitter<{title: string, text: string, tags: number[]}> = new EventEmitter()
+  @Output() onEdit: EventEmitter<{id: number, title: string, text: string, tags: number[]}> = new EventEmitter()
 
 
   constructor() {
@@ -27,10 +27,21 @@ export class TodoItemPopupComponent implements OnInit {
       title: new FormControl(this.itemToEdit ? this.itemToEdit.title : '', Validators.required),
       text: new FormControl(this.itemToEdit ? this.itemToEdit.text : '', Validators.required)
     })
+    if (this.itemToEdit) this.selectedTags = [...this.itemToEdit.tags]
   }
 
-  changeFilter() {
-
+  changeFilter(event: any, tag: Tag) {
+    if (event.checked) {
+      if (!this.selectedTags.includes(tag)) {
+        this.selectedTags.push(tag)
+      }
+      return
+    }
+    if (this.selectedTags.find(findTag => findTag.id == tag.id)) {
+      this.selectedTags = this.selectedTags.filter(filterTag => filterTag.id != tag.id)
+    }
+    
+    console.error(this.selectedTags)
   }
 
   checkSelectedTag(tag: Tag) : boolean {
@@ -38,17 +49,19 @@ export class TodoItemPopupComponent implements OnInit {
   }
 
   save() {
-    console.error(this.itemToEdit)
+    console.error(this.itemToEdit, this.selectedTags)
+    const newTodo = {
+      title: this.form.value.title, 
+      text: this.form.value.text, 
+      tags: this.selectedTags.map(tag => tag.id)
+    }
     if (this.itemToEdit) {
       this.onEdit.emit({
-        ...this.itemToEdit,
-        title: this.form.value.title,
-        text: this.form.value.text,
-        tags: this.selectedTags
+        ...newTodo,
+        id: this.itemToEdit.id
       })
       return
     }
-    const newTodo = {title: this.form.value.title, text: this.form.value.text, tags: this.selectedTags}
     this.onAdd.emit(newTodo)
   }
 }

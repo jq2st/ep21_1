@@ -2,6 +2,9 @@
     <mat-toolbar color="primary">
         <span>Todo List application (apopov 181-322)</span>
         <span class="example-spacer"></span>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+        </button>
     </mat-toolbar>
 </header>
 <main>
@@ -10,9 +13,6 @@
             <mat-label>Поиск</mat-label>
             <input matInput autocomplete="off" [(ngModel)]="searchInput" (input)="search()">
         </mat-form-field>
-        <!-- <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <mat-icon>filter_list</mat-icon>
-        </button> -->
         <button mat-mini-fab color="accent" aria-label="Example icon button with a menu icon" (click)="isItemPopup = true">
             <mat-icon>add</mat-icon>
         </button>
