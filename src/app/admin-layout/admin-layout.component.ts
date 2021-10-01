@@ -12,7 +12,8 @@ export class AdminLayoutComponent implements OnInit {
   constructor(private router: Router, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    window.open('https://small-todo.herokuapp.com/admin/')
+    const redirect = window.open('https://small-todo.herokuapp.com/admin/')
+    if (!redirect) this._snackBar.open('Браузер не разрешил переход. Для доступа в панель администратора перейдите по ссылке https://small-todo.herokuapp.com/admin/')
     this.router.navigate([''])
   }
 
